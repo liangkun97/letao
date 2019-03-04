@@ -4,6 +4,9 @@
     /*touch-action----> chrome 监听touch类事件报错：无法被动侦听事件preventDefault*/
     touch-action: none;
 }
+body{
+    background: #fff;
+}
 ul{
     margin: 0;
     padding: 0;
@@ -14,14 +17,19 @@ em{
 }
 /*顶部通栏*/
 .mt_container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    margin: 0 auto;
+    height: 100%;
 }
 .mt_header{
     width: 100%;
     height: 45px;
+    line-height: 45px;
     top: 0;
-    position: fixed;
+    left: 0;
+    position: absolute;
     background: hotpink;
     color: #fff;
     z-index: 9999;
@@ -29,7 +37,6 @@ em{
 .mt_header a{
     width: 45px;
     height: 45px;
-    display: block;
     position: absolute;
     top: 0;
     color: #fff;
@@ -48,12 +55,21 @@ em{
     text-align: center;
 }
 .mt_header h3{
-    height: 45px;
     line-height: 45px;
     margin: 0;
     text-align: center;
     font-size: 18px;
     font-weight: normal;
+}
+.mt_sc{
+    padding: 45px 0 55px 0;
+    width: 100%;
+    height: 100%;
+}
+.mt_sc .mt_wrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 /*底部*/
 .mt_footer{

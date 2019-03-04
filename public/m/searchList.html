@@ -25,40 +25,43 @@
 <div class="mt_container">
     <!--顶部通栏-->
     <header class="mt_header">
-        <a href="javascript:history.back();" class="left"><span class="fa fa-arrow-left"></span></a>
+        <a href="search.html" class="left"><span class="fa fa-arrow-left"></span></a>
         <h3>搜索中心</h3>
     </header>
     <!--搜索中心-->
     <div class="mt_sc">
         <div class="mt_wrapper">
-            <div class="mt_search">
-                <div class="mt_search_bar">
-                    <form action="#">
-                        <input type="search" placeholder="搜索您喜欢的商品">
-                    </form>
-                    <a href="javascript:;">搜索</a>
-                </div>
-                <div class="mt_search_history">
-                    <div class="mt_search_history_title">
-                        <span class="left">搜索历史</span>
-                        <a href="javascript:;" class="right"><span class="fa fa-trash-o"></span> 清空记录</a>
-                    </div>
-                    <div class="mt_search_history_content">
-                        <ul>
-                            <li><a href="#" class="mt_history_item">nike</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">nike</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">nike</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">你知道我想要什么吗</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">new balance</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">nike</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                            <li><a href="#" class="mt_history_item">nike</a><a href="#" class="mt_history_delete"><span class="fa fa-times"></span></a></li>
-                        </ul>
+            <div class="mui-scroll-wrapper" id="refreshContainer">
+                <div class="mui-scroll">
+                    <div class="mt_search">
+                        <div class="mt_search_bar">
+                            <form action="#">
+                                <input type="search" placeholder="搜索您喜欢的商品">
+                            </form>
+                            <a href="javascript:;">搜索</a>
+                        </div>
+                        <div class="mt_search_order">
+                            <a href="javascript:;" class="now" data-order="time">
+                                <p>上架时间<span class="fa fa-angle-down"></span></p>
+                            </a>
+                            <a href="javascript:;" data-order="price">
+                                <p>价格<span class="fa fa-angle-down"></span></p>
+                            </a>
+                            <a href="javascript:;" data-order="num">
+                                <p>销量<span class="fa fa-angle-down"></span></p>
+                            </a>
+                            <a href="javascript:;" data-order="count">
+                                <p>折扣<span class="fa fa-angle-down"></span></p>
+                            </a>
+                        </div>
+                        <div class="mt_content">
+                            <ul class="mui-clearfix"> </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!--底部-->
     <footer class="mt_footer">
         <ul>
@@ -77,9 +80,27 @@
         </ul>
     </footer>
 </div>
+<script type="text/artTemplate" id="productList">
+    <% for(var i = 0; i < data.length; i++){%>
+    <% var item = data[i]; %>
+    <li><a href="product.html?productId=<%=item.id%>">
+        <% if(item.pic && item.pic[0]){ %>
+        <img src="<%=item.pic[0].picAddr%>" alt="">
+        <% }else{ %>
+        <img src="images/none.jpg" alt="">
+        <% } %>
+        <p class="mui-ellipsis-2"> <%=data[i].proName%></p>
+        <span class="nowPrice">￥<%=data[i].price%></span><span class="oldPrice">￥<%=data[i].oldPrice%></span>
+        <div class="mt_buy">
+            <button>立即购买</button><button>加入购物车</button>
+        </div>
+    </a></li>
+    <% } %>
+</script>
 <script src="assets/mui/js/mui.min.js"></script>
 <script src="assets/zepto/zepto.min.js"></script>
 <script src="assets/artTemplate/template-native.js"></script>
-<script src="js/search.js"></script>
+<script src="js/common.js"></script>
+<script src="js/searchList.js"></script>
 </body>
 </html>
