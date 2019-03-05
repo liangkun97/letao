@@ -17,7 +17,7 @@
 }
 .mui-slider-indicator .mui-indicator{
     display: inline-block;
-    width: 8px;
+    width: 6px;
     height: 5px;
     margin: 1px 2px;
     cursor: pointer;
@@ -27,7 +27,7 @@
     border: none;
 }
 .mui-slider-indicator .mui-active.mui-indicator {
-    width: 12px;
+    width: 10px;
     background: #fff;
 }
 

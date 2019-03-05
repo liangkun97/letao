@@ -1,0 +1,106 @@
+/*轮播图*/
+/*图片*/
+.mt_banner{
+    width: 100%;
+}
+.mt_banner img{
+    width: 100%;
+    display: block;
+}
+/*点组件*/
+.mui-slider-indicator{
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    background: none;
+}
+.mui-slider-indicator .mui-indicator{
+    display: inline-block;
+    width: 6px;
+    height: 5px;
+    margin: 1px 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    background: rgba(30,30,30,.5);
+    box-shadow: none;
+    border: none;
+}
+.mui-slider-indicator .mui-active.mui-indicator {
+    width: 10px;
+    background: rgba(30,30,30,.8);
+}
+/*商品详情*/
+.mt_detail_title{
+    width: 100%;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+}
+.mt_detail_price{
+    width: 100%;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 8px 10px 8px 10px;
+    font-size: 12px;
+}
+.mt_detail_price span.present{
+    font-size: 18px;
+    color: hotpink;
+}
+.mt_detail_price span.original{
+    font-size: 10px;
+    color: #bbb;
+    text-decoration: line-through;
+}
+.mt_detail_size{
+    border-bottom: 1px solid #f2f2f2;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+}
+.mt_detail_size .btn_size{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-bottom: 10px;
+    background: #f2f2f2;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.mt_detail_size .btn_size.now{
+    background: lightpink;
+}
+.mt_detail_num{
+    padding: 10px 5px;
+    border-bottom: 1px solid #f2f2f2;
+    font-size: 14px;
+}
+.mt_detail_num .jian, .mt_detail_num .jia{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.mt_detail_num input{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
+}

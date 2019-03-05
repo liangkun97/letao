@@ -1,0 +1,41 @@
+.mt_register{
+    width: 100%;
+    padding: 45px 10px 55px 10px;
+}
+.mt_register div{
+    width: 100%;
+    position: relative;
+}
+.mt_register div p{
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 0 0 0;
+    font-size: 16px;
+}
+.mt_register div input{
+    margin: 0;
+}
+.mt_register div input.mt_register_password{
+    position: relative;
+}
+.mt_register div span{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    line-height: 40px;
+    text-align: center;
+    color: #666;
+}
+.mt_register .register{
+    display: block;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background: hotpink;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+}

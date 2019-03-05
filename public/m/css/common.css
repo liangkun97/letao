@@ -108,3 +108,38 @@ em{
 .mt_footer ul li.now a p{
     color: hotpink;
 }
+/*商品详情底部*/
+.mt_footer .mt_detail_container{
+    width: 100%;
+    height: 55px;
+    background: #f2f2f2;
+    position: relative;
+    padding: 10px;
+}
+.mt_footer .mt_detail_container a{
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    float: left;
+}
+.mt_footer .mt_detail_container a.mt_cart{
+    width: 50px;
+    height: 35px;
+}
+.mt_footer .mt_detail_container a.mt_cart span{
+    color: #666;
+    font-size: 24px;
+}
+.mt_footer .mt_detail_container a.mt_addCart{
+    width: 130px;
+    height: 35px;
+    background: lightpink;
+    margin: 0 15px 0 15px;
+}
+.mt_footer .mt_detail_container a.mt_buyNow{
+    width: 130px;
+    height: 35px;
+    background: hotpink;    
+}

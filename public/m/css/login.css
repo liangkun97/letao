@@ -1,0 +1,42 @@
+.mt_login{
+    width: 100%;
+    padding: 10px;
+}
+.mt_login .mt_login_input{
+    width: 100%;
+    position: relative;
+}
+.mt_login .mt_login_input input{
+    width: 100%;
+}
+.mt_login .mt_login_input span{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 40px;
+    text-align: center;
+    color: #666;
+}
+.mt_login a{
+    display: block;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background: hotpink;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+}
+.mt_register{
+    width: 100%;
+    color: hotpink;
+    text-align: right;
+    font-size: 14px;
+    padding-right: 10px;
+}
+.mt_register a{
+    color: hotpink;
+}

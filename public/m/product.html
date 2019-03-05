@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--ios是否运行快捷启动方式-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--ios顶部通知栏的样式  黑色-->
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <!--遇到数字不让转成电话号码格式-->
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="喵喵淘购是中国最小的正品运动鞋。皮鞋网上专卖。乐淘网经营的品牌包括耐克、阿迪达斯、李宁、匡威等国内外知名品牌的篮球鞋,板鞋,休闲鞋,跑步鞋,帆布...">
+    <meta name="Keywords" content="喵喵淘购 买鞋子 上喵喵淘购 运动鞋 篮球鞋 帆布鞋 跑步鞋 男鞋 女鞋 足球鞋 休闲鞋 凉鞋 户外鞋 布洛克 高跟鞋 单鞋 豆豆鞋 乐福鞋 牛津鞋 凉拖 皮鞋 短靴 长靴 登山鞋 徒步鞋 硫化鞋 训练鞋 溯溪鞋 越野鞋 板鞋 足球鞋 网球鞋 赛车鞋 雪地靴 马丁靴 商务 英伦">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon1.ico">
+    <link rel="stylesheet" href="assets/mui/css/mui.css">
+    <link rel="stylesheet" href="assets/fontAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/product.css">
+    <title>喵喵淘购-商品详情</title>
+</head>
+<body>
+<!--版心-->
+<div class="mt_container">
+    <!--顶部通栏-->
+    <header class="mt_header">
+        <a href="javascript:history.back();" class="left"><span class="fa fa-arrow-left"></span></a>
+        <h3>商品详情</h3>
+        <a href="index.html" class="right"><span class="fa fa-home"></span></a>
+    </header>
+    <!--搜索详情-->
+    <div class="mt_sc">
+        <div class="mt_wrapper">
+            <div class="mui-scroll-wrapper" id="refreshContainer">
+                <div class="mui-scroll">
+                    <!--TODO-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    <footer class="mt_footer">
+        <div class="mt_detail_container">
+            <a href="javascript:;" class="mt_cart"><span class="fa fa-shopping-cart"></span></a>
+            <a href="javascript:;" class="mt_addCart">加入购物车</a>
+            <a href="javascript:;" class="mt_buyNow">立即购买</a>
+        </div>
+    </footer>
+</div>
+<script type="text/artTemplate" id="productTemp">
+    <%
+        if(!pic || !pic.length){
+            pic = [{picAddr:'images/none.jpg'}];
+        }
+    %>
+    <nav class="mt_banner">
+        <div class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+                <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a href="javascript:;"><img src="<%=pic[pic.length-1].picAddr%>" alt="" /></a>
+                </div>
+                <% for(var i = 0; i < pic.length; i++){ %>
+                <div class="mui-slider-item">
+                    <a href="javascript:;"><img src="<%=pic[i].picAddr%>" alt="" /></a>
+                </div>
+                <% } %>
+                <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a href="javascript:;"><img src="<%=pic[0].picAddr%>" alt="" /></a>
+                </div>
+            </div>
+            <div class="mui-slider-indicator">
+                <% for(var i = 0; i < pic.length; i++){ %>
+                <div class="mui-indicator <%=i==0?'mui-active':''%>"></div>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+    <div class="mt_detail_title"><%=proName%></div>
+    <div class="mt_detail_price">
+        价格:
+        <span class="present">￥<%=price%></span>
+        <span class="original">￥<%=oldPrice%></span>
+    </div>
+    <div class="mt_detail_size">
+        尺码:
+        <% var sizeArr = size.split('-'); %>
+        <% for(var i = sizeArr[0]; i <= sizeArr[1]; i++){ %>
+        <span class="btn_size"><%==i%></span>
+        <% } %>
+    </div>
+    <div class="mt_detail_num">
+        数量:
+        <span class="jian">-</span><input readonly="" type="text" value="0" data-max="<%=num%>"><span class="jia">+</span>
+        剩余：<%=num%>件
+    </div>
+</script>
+<script src="assets/mui/js/mui.min.js"></script>
+<script src="assets/zepto/zepto.min.js"></script>
+<script src="assets/artTemplate/template-native.js"></script>
+<script src="js/common.js"></script>
+<script src="js/product.js"></script>
+</body>
+</html>
