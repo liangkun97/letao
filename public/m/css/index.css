@@ -28,7 +28,7 @@
 }
 .mui-slider-indicator .mui-active.mui-indicator {
     width: 10px;
-    background: #fff;
+    /*background: #fff;*/
 }
 
 /*分类*/
@@ -88,7 +88,6 @@
 .mt_content ul{
     width: 100%;
     height: auto;
-    padding-bottom: 55px;
 }
 .mt_content ul li{
     width: 50%;

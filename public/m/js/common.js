@@ -13,9 +13,18 @@ MT.getParamsByUrl = function () {
     }
     return params;
 };
+MT.getItemById = function (arr,id) {
+  var obj = null;
+  arr.forEach(function (item,i) {
+      if (item.id == id){
+          obj = item;
+      }
+  });
+    return obj;
+};
 // 需要登录的ajax请求
 MT.loginUrl = '/m/user/login.html';
-MT.cartUrl = '/m/user/userCart.html';
+MT.cartUrl = '/m/user/cart.html';
 MT.userUrl = '/m/user/index.html';
 MT.loginAjax = function (params) {
     $.ajax({
