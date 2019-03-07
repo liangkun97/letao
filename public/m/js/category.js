@@ -42,7 +42,6 @@ var render = function (categoryId) {
     getSecondCategoryData({
         id:categoryId
     },function (data) {
-        console.log(data);
         $(".mt_category_right ul").html(template("secondTemplate",data));
     });
 };

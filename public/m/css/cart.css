@@ -154,7 +154,7 @@
     margin: 5px 15px 0 0;
     border-radius: 22px;
 }
-.mt_total .total{
+#cartAmount{
     font-size: 16px;
 }
 /*商品编辑*/
@@ -233,25 +233,4 @@
     height: 96px;
     line-height: 96px;
     background: #f6f6f6;
-}
-.item_select{
-    display: none;
-}
-.fake_select{
-    position: absolute;
-    top: 0px;
-    left: -20px;
-    width: 15px;
-    height: 96px;
-    line-height: 96px;
-    background: #fff;
-    box-sizing: border-box;
-}
-.fake_select span{
-    display: block;
-    width: 13px;
-    height: 13px;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    margin-top: -50%;
 }

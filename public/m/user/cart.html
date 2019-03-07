@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="mt_total">
-        合计：<span>￥</span><span class="total">0.00</span>
+        合计：<span>￥</span><span id="cartAmount">0.00</span>
         <a href="javascript:;" class="submit">结算</a>
     </div>
     <!--底部-->
@@ -58,7 +58,7 @@
             <li class="now"><a href="cart.html"><span class="fa fa-shopping-cart"></span>
                 <p>购物车</p>
             </a></li>
-            <li><a href="login.html"><span class="fa fa-user"></span>
+            <li><a href="user.html"><span class="fa fa-user"></span>
                 <p>会员中心</p>
             </a></li>
         </ul>
@@ -75,8 +75,7 @@
         <div class="mui-slider-handle">
             <div class="mui-table-cell">
                 <a href="javascript:;">
-                    <input type="radio" class="item_select">
-                    <div class="fake_select"><span></span></div>
+                    <input type="checkbox" class="item_select" data-id="<%=item.id%>">
                     <% var pic = item.pic; %>
                     <% if (!pic || !pic.length){ %>
                     <img class="mui-media-object mui-pull-left" src="../images/none.jpg">

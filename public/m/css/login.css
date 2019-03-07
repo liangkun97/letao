@@ -40,3 +40,38 @@
 .mt_register a{
     color: hotpink;
 }
+.mt_sc .mui-input-group {
+    position: relative;
+    padding: 10px 0 0 0;
+    border: 0;
+    background-color: #fff;
+}
+.mt_sc .mui-input-row label
+{
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    line-height: 1.1;
+
+    float: left;
+
+    width: 25%;
+    padding: 11px 15px;
+}
+
+.mt_sc .mui-input-row label ~ input, .mui-input-row label ~ select, .mui-input-row label ~ textarea
+{
+    width: 75%;
+}
+
+.mt_sc .mui-button-row button
+{
+    line-height: 0.8;
+    width: 100px;
+    padding: 10px 15px;
+    background: hotpink;
+    border: 1px solid hotpink;
+}
+
+.mt_sc .mui-input-row .mui-btn ~ input, .mui-input-row .mui-btn ~ select, .mui-input-row .mui-btn ~ textarea
+{
+    width: 85%;
+}

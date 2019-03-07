@@ -25,7 +25,7 @@ MT.getItemById = function (arr,id) {
 // 需要登录的ajax请求
 MT.loginUrl = '/m/user/login.html';
 MT.cartUrl = '/m/user/cart.html';
-MT.userUrl = '/m/user/index.html';
+MT.userUrl = '/m/index.html';
 MT.loginAjax = function (params) {
     $.ajax({
         url: params.url || '#',
@@ -44,4 +44,16 @@ MT.loginAjax = function (params) {
             mui.toast('服务器繁忙');
         }
     })
+};
+MT.serializeObject = function (serializeStr) {
+  var obj = {};
+  /*key=value&k=v*/
+  if (serializeStr){
+      var arr = serializeStr.split('&');
+      arr.forEach(function (item,i) {
+         var itemArr = item.split('=');
+         obj[itemArr[0]] = itemArr[1];
+      });
+  }
+  return obj;
 };

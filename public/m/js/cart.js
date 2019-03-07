@@ -1,4 +1,6 @@
 $(function () {
+
+
     /*区域滚动*/
     mui('.mui-scroll-wrapper').scroll({
         indicators:false
@@ -21,43 +23,12 @@ $(function () {
                             })
                         })
                     },500)
+
                }
            }
        }
     });
-    // 侧滑的时候  点击编辑  弹出对话框（尺寸，数量）
-    // 策划的时候   点击删除 弹出对话框  确认框
 
-    // 点击复选框  计算总金额
-
-    //$.swipeoutOpen(el,direction)//打开指定列的滑动菜单，
-    // el:指定列的dom对象，direction：取值left|right，指定打开的是左侧或右侧滑动菜单
-
-
-    //$.swipeoutClose(el);//关闭指定列的滑动菜单，el:指定列的dom对象
-    //				setTimeout(function() {
-    //					$.swipeoutOpen(document.getElementById("OA_task_1").querySelector('li:last-child'), 'left');
-    //					setTimeout(function() {
-    //						$.swipeoutClose(document.getElementById("OA_task_1").querySelector('li:last-child'));
-    //					}, 1000);
-    //				}, 1000);
-    //第一个demo，拖拽后显示操作图标，点击操作图标删除元素；
-    var btnArray = ['确认', '取消'];
-    $('.mui-table-view').on('tap', '#edit', function(event) {
-        var elem = this;
-        var id = $(this).parent().attr('data-id');
-        var item = MT.getItemById(window.cartData.data,id);
-        var html = template('item_edit',item);
-        mui.confirm(html.replace(/\n/g,''), '喵喵淘购', btnArray, function(e) {
-            if (e.index == 0) {
-                console.log(e);
-            } else {
-                setTimeout(function() {
-                    // $.swipeoutClose(elem);
-                }, 0);
-            }
-        });
-    });
     $('body').on('tap','.btn_size',function () {
         $(this).addClass('now').siblings().removeClass('now');
     });
@@ -68,7 +39,8 @@ $(function () {
         //   字符串转数字
         var maxNum = parseInt($input.attr('data-max'));
         if ($(this).hasClass('jian')) {
-            if (currNum == 0) {
+            if (currNum <= 1) {
+                mui.toast('至少一件商品');
                 return false;
             }
             currNum--;
@@ -81,11 +53,12 @@ $(function () {
         };
         $input.val(currNum);
     });
-    //第二个demo，向左拖拽后显示操作图标，释放后自动触发的业务逻辑
+    // 商品删除
     $('.mui-table-view').on('tap', '#delete', function(event) {
+        var li = this.parentNode.parentNode;
         var $this = $(this);
         var id = $this.parent().attr('data-id');
-        mui.confirm('确认删除该商品？', '喵喵淘购', btnArray, function(e) {
+        mui.confirm('确认删除该商品？', '喵喵淘购', ['确认', '取消'], function(e) {
             if (e.index == 0) {
                 MT.loginAjax({
                     url: '/cart/deleteCart',
@@ -97,18 +70,57 @@ $(function () {
                     success: function (data) {
                         if (data.success == true) {
                             $this.parent().parent().remove();
+                            setAmount();
                         }
                     }
                 })
             } else {
-                setTimeout(function() {
-                    // $.swipeoutClose(elem);
-                    /*TODO*/
-                }, 0);
+                mui.swipeoutClose(li);
             }
         });
     });
-
+    // 商品编辑
+    $('.mui-table-view').on('tap', '#edit', function(event) {
+        var li = this.parentNode.parentNode;
+        var $this = $(this);
+        var id = $this.parent().attr('data-id');
+        var item = MT.getItemById(window.cartData.data,id);
+        var html = template('item_edit',item);
+        mui.confirm(html.replace(/\n/g,''), '喵喵淘购', ['确认', '取消'], function(e) {
+            if (e.index == 0) {
+                var updataNum = $('.mt_detail_num input').val();
+                var updataSize = $('.btn_size.now').html();
+                var params = {
+                    id: id,
+                    size: updataSize,
+                    num: updataNum
+                };
+                updataCart(params,function (data) {
+                    if (data.success == true){
+                        // 窗口关闭
+                        // 列表渲染
+                        item.num = updataNum;
+                        item.size = updataSize;
+                        // 渲染页面
+                        var $checkbox = $('[type=checkbox]:checked');
+                        $('.mt_cart .mui-table-view').html(template('cartContent',window.cartData));
+                        //  选中购物车选中的商品
+                        $checkbox.forEach(function (item,i) {
+                            var id = $(item).attr('data-id');
+                           $("input[type=checkbox][data-id='"+id+"']").prop("checked",true);
+                        });
+                        setAmount($checkbox);
+                    }
+                })
+            } else {
+                mui.swipeoutClose(li);
+            }
+        });
+    });
+    $('.mui-table-view').on('change','[type=checkbox]',function () {
+        var $checkbox = $('[type=checkbox]:checked');
+        setAmount($checkbox);
+    })
 });
 var getCartData = function (callback) {
     $.ajax({
@@ -122,7 +134,34 @@ var getCartData = function (callback) {
         success: function (data) {
             window.cartData = data;
             callback && callback(data);
-            console.log(window.cartData);
         }
     })
+};
+var updataCart = function (params,callback) {
+  $.ajax({
+      url: '/cart/updateCart',
+      type: 'post',
+      data: params,
+      dataType: 'json',
+      success: function (data) {
+          window.data = data;
+          callback && callback(data);
+      },
+      error: function () {
+          mui.toast('服务器繁忙');
+      }
+  })
+};
+var setAmount = function (checkbox) {
+    var amountSum = 0;
+    checkbox.forEach(function (item,i) {
+        var id = $(this).attr('data-id');
+        var item = MT.getItemById(window.cartData.data,id);
+        var price = item.price;
+        var num = item.num;
+        var amount = price * num;
+        amountSum += amount;
+    });
+    amountSum = Math.floor(amountSum * 100)/100;
+    $('#cartAmount').html(amountSum);
 };
