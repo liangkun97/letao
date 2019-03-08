@@ -1,70 +1,59 @@
 $(function () {
-    /*1.默认首页渲染*/
-    var currPage = 1;
-    var render = function () {
-        getCategorySecondData({
-            page: currPage,
+    /*1.分类列表分页展示*/
+    var currentPage = 1;
+    var render = function(){
+        getSecondCategoryData({
+            page: currentPage,
             pageSize: 5
-        }, function (data) {
-            /*渲染列表*/
-            $('tbody').html(template('template', data));
-            /*设置分页  对分页按钮进行绑定*/
-            setPaginator(data.page, Math.ceil(data.total / data.size), render);
-        });
-    };
-    render();
-    /*2.实现分页渲染*/
-    var setPaginator = function (pageCurr, pageSum, callback) {
-        /*获取需要初始的元素 使用bootstrapPaginator方法*/
-        $('.pagination').bootstrapPaginator({
-            /*当前使用的是3版本的bootstrap*/
-            bootstrapMajorVersion: 3,
-            /*配置的字体大小是小号*/
-            size: 'small',
-            /*当前页*/
-            currentPage: pageCurr,
-            /*一共多少页*/
-            totalPages: pageSum,
-            /*点击页面事件*/
-            onPageClicked: function (event, originalEvent, type, page) {
-                /*改变当前页再渲染 page当前点击的按钮的页面*/
-                currPage = page;
-                callback && callback();
-            }
-        });
+        },function (data) {
+            $('tbody').html(template('secondCategory',data));
+            setPage(currentPage, Math.ceil(data.total/data.size), render)
+        })
     }
-    /*3.添加二级分类*/
-    $('#addBtn').on('click', function () {
-        $('#addModal').modal('show');
-    });
-    /*初始化模态框功能*/
+    render();
+
+    /*2.分页展示*/
+    function setPage(pageCurrent, pageSum, callback) {
+        $(".pagination").bootstrapPaginator({
+            //设置版本号
+            bootstrapMajorVersion: 3,
+            // 显示第几页
+            currentPage: pageCurrent,
+            // 总页数
+            totalPages: pageSum,
+            //当单击操作按钮的时候, 执行该函数, 调用ajax渲染页面
+            onPageClicked: function (event,originalEvent,type,page) {
+                // 把当前点击的页码赋值给currentPage, 调用ajax,渲染页面
+                currentPage = page
+                callback && callback()
+            }
+        })
+    }
     initDropDown();
     initUpload();
-    /*确定  提交的数据名称  一级分类ID categoryId  二级分类名称 brandName 二级分类Logo brandLogo */
-    /*校验*/
-    $('#form').bootstrapValidator({
-        /*校验插件默认会忽略  隐藏的表单元素
-        不忽略任何情况的表单元素*/
-        excluded:[],
-        /*默认样式*/
-        feedbackIcons: {
+    // 3.添加二级分类
+    // 3.1下拉选择一级分类
+    $('#defaultForm').bootstrapValidator({
+        /*校验插件默认会忽略隐藏的表单元素*/
+        /*不忽略任何情况的表单元素*/
+        excluded: [],
+        feedbackIcons: {/*input状态样式图片*/
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-        /*校验的字段*/
-        fields:{
-            categoryId:{
+        fields: {/*验证：规则*/
+            categoryId: {//验证input项：验证规则
                 validators: {
                     notEmpty: {
                         message: '请选择一级分类'
                     }
                 }
             },
-            brandName:{
+            brandName: {
                 validators: {
                     notEmpty: {
-                        message: '请输入二级分类名称'
+                        message: '二级分类名称不能为空'
                     }
                 }
             },
@@ -76,84 +65,83 @@ $(function () {
                 }
             }
         }
-    }).on('success.form.bv', function(e) {
+    }).on('success.form.bv', function(e) {//点击提交之后
+        // Prevent form submission
         e.preventDefault();
-        /*提交数据了*/
+
+        // Get the form instance
         var $form = $(e.target);
+        console.log($form.serialize());
+        // Use Ajax to submit form data 提交至form标签中的action，result自定义
         $.ajax({
-            type:'post',
-            url:'/category/addSecondCategory',
-            data:$form.serialize(),
-            dataType:'json',
-            success:function (data) {
-                if(data.success){
-                    /*关闭模态框*/
-                    $('#addModal').modal('hide');
-                    /*渲染第一页*/
-                    currPage = 1;
+            url: '/category/addSecondCategory',
+            type: 'post',
+            data: $form.serialize(),
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    currentPage = 1;
                     render();
-                    /*重置表单数据和校验样式*/
                     $form[0].reset();
                     $form.data('bootstrapValidator').resetForm();
                     $('.dropdown-text').html('请选择');
                     $form.find('img').attr('src','images/none.png');
                 }
             }
-        });
+        })
     });
+
+    // 3.2上传图片
+    // 3.3校验表单
 });
-/*1.获取二级分类分页数据*/
-var getCategorySecondData = function (params, callback) {
+//获取数据
+var getSecondCategoryData = function (params,callback) {
+  $.ajax({
+      url: '/category/querySecondCategoryPaging',
+      type: 'get',
+      data: params,
+      dataType: 'json',
+      success: function (data) {
+          callback && callback(data);
+      }
+  })
+};
+/*获取数据*/
+var getCategoryFirstData = function (callback) {
     $.ajax({
-        type: 'get',
-        url: '/category/querySecondCategoryPaging',
-        data: params,
-        dataType: 'json',
-        success: function (data) {
-            callback && callback(data);
-        }
-    });
-}
-/*1.下拉选择*/
-var initDropDown = function () {
-    var $dropDown = $('.dropdown-menu');
-    $.ajax({
-        type: 'get',
         url: '/category/queryTopCategoryPaging',
+        type: 'get',
         data: {
             page: 1,
             pageSize: 100
         },
         dataType: 'json',
         success: function (data) {
-            /*data.rows 就是选项*/
-            var html = [];
-            $.each(data.rows,function (i, item) {
-                html.push('<li><a data-id="'+item.id+'" href="javascript:;">'+item.categoryName+'</a></li>');
-            })
-            $dropDown.html(html.join(''));
+            callback && callback(data);
         }
-    });
+    })
+};
+//下拉选择
+var initDropDown = function () {
+    var $dropDown = $('.dropdown-menu');
+    getCategoryFirstData(function (data) {
+        $('#firstCategoryMenu').html(template('firstCategory',data));
+    })
     $dropDown.on('click','a',function () {
-        /*显示选中*/
         $('.dropdown-text').html($(this).html());
-        /*设置表单的值*/
         $('[name="categoryId"]').val($(this).data('id'));
-        /*显示合法的提示*/
-        $('#form').data('bootstrapValidator').updateStatus('categoryId','VALID');
-    });
+        $('#defaultForm').data('bootstrapValidator').updateStatus('categoryId','VALID');
+    })
 }
-/*2.图片上传*/
+
+//图片上传
 var initUpload = function () {
     $('[name="pic1"]').fileupload({
-        dataType:'json',
-        done:function (e, data) {
-            /*预览*/
+        dataType: 'json',
+        done: function (e, data) {
             $(this).parent().parent().next().find('img').attr('src',data.result.picAddr);
-            /*设置表单的值*/
             $('[name="brandLogo"]').val(data.result.picAddr);
-            /*显示合法的提示*/
-            $('#form').data('bootstrapValidator').updateStatus('brandLogo','VALID');
+            console.log($(this));
         }
     });
-}
+};

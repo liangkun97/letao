@@ -48,7 +48,7 @@
             <li class="active">一级分类</li>
         </ol>
         <div class="ad_content">
-            <button id="addBtn" class="btn btn-default mb_15">添加分类</button>
+            <button id="addBtn" class="btn btn-default mb_15" data-toggle="modal" data-target="#myModal">添加分类</button>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -57,6 +57,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                <!--TODO-->
                 </tbody>
             </table>
             <div class="page">
@@ -65,7 +66,7 @@
         </div>
     </div>
 </section>
-<div class="modal fade" id="addModal">
+<div class="modal fade" id="myModal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,18 +82,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="submit" class="btn btn-primary" form="form">确定</button>
+                <button type="submit" form="form" class="btn btn-primary">确定</button>
             </div>
-        </div>
-    </div>
-</div>
-<script type="text/template" id="template">
-    <% for(var i = 0 ; i < rows.length ; i ++){ %>
-    <tr>
-        <td><%=(page-1)*size+i+1%></td>
-        <td><%=rows[i].categoryName%></td>
-    </tr>
-    <% } %>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/template" id="category">
+<% for(var i = 0; i < rows.length; i++){ %>
+<tr data-id="<%=rows[i].id%>">
+    <td width="20%"><%=(page - 1) * size + i + 1%></td>
+    <td width="80%"><%=rows[i].categoryName%></td>
+</tr>
+<% } %>
 </script>
 <script src="assets/jquery/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>

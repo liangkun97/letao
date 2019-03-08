@@ -1,65 +1,109 @@
 $(function(){
-    /*1.注册人数  数据可视化*/
-    /*1.1准容器渲染图标*/
-    /*1.2准备数据 */
-    /*1.3引入核心echarts文件*/
-    /*1.4获取dom容器*/
-    var firstDom = document.querySelector('.picTable:first-child');
-    /*1.5初始化dom容器*/
-    var firstCarts = echarts.init(firstDom);
-    /*1.6进行配置和导入数据*/
+    barCharts();
+    pieCharts();
+});
+var barCharts = function () {
+    // 获取数据
+    var data = [
+        {
+            name:'一月',
+            value:300
+        },
+        {
+            name:'二月',
+            value:400
+        },
+        {
+            name:'三月',
+            value:500
+        },
+        {
+            name:'四月',
+            value:200
+        },
+        {
+            name:'五月',
+            value:600
+        },
+        {
+            name:'六月',
+            value:300
+        }
+    ];
+    var xdata = [], sdata = [];
+    data.forEach(function (item,i) {
+        xdata.push(item.name);
+        sdata.push(item.value);
+    });
+    // 选择容器 初始化插件
+    var myChart = echarts.init(document.getElementById('barCharts'));
     var option = {
-        /*图标的标题*/
         title: {
-            text: '2017年注册人数'
+            text: '2018年注册人数',
+            x:'center'
         },
-        tooltip: {},
-        legend: {
-            data:['人数']
+        legend:{
+            data: ['注册人数'],
+            x: 'left'
         },
-        xAxis: {
-            data: ["1月","2月","3月","4月","5月","6月"]
+        tooltip: {
+
         },
-        yAxis: {},
+        xAxis: [{
+            type: 'category',
+            data: ['1月', '2月', '3月', '4月', '5月', '6月']
+        }],
+        yAxis: {
+            type: 'value'
+        },
         series: [{
-            name: '人数',
-            type: 'bar',
-            data: [1000, 2000, 3600, 1400, 1200, 2220]
+            name: '注册人数',
+            data: [120, 200, 150, 80, 70, 110],
+            type: 'bar'
         }]
     };
-    /*1.7 渲染图标*/
-    firstCarts.setOption(option);
+    option.xAxis[0].data = xdata;
+    option.series[0].data = sdata;
+    myChart.setOption(option);
+};
+var pieCharts = function () {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('pieCharts'));
 
-    /*2.品牌销量  数据可视化*/
-    var secondDom = document.querySelector('.picTable:last-child');
-    var secondCarts = echarts.init(secondDom);
-    var secondOption = {
+    // 指定图表的配置项和数据
+    option = {
         title : {
-            text: '热门品牌销售',
-            subtext: '2017年6月',
+            text: '品牌销售占比',
+            subtext: '2019年2月',
             x:'center'
         },
         tooltip : {
             trigger: 'item',
-            formatter: "{b} : {c} ({d}%)"
+            /*
+            * series.name  a
+            * data.name  b
+            * data.value  c
+            * 占比  d
+            * */
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
             orient: 'vertical',
             left: 'left',
-            data: ['耐克','阿迪','百伦','安踏','李宁']
+            data: ['李宁','耐克','阿迪','匡威','回力']
         },
         series : [
             {
-                name: '访问来源',
+                name: '销售情况',
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],
                 data:[
-                    {value:335, name:'耐克'},
-                    {value:310, name:'阿迪'},
-                    {value:234, name:'百伦'},
-                    {value:135, name:'安踏'},
-                    {value:1548, name:'李宁'}
+                    {value:335, name:'李宁'},
+                    {value:310, name:'耐克'},
+                    {value:234, name:'阿迪'},
+                    {value:135, name:'匡威'},
+                    {value:1548, name:'回力'}
                 ],
                 itemStyle: {
                     emphasis: {
@@ -71,5 +115,6 @@ $(function(){
             }
         ]
     };
-    secondCarts.setOption(secondOption);
-})
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+};

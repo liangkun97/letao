@@ -14,6 +14,9 @@ a:hover,a:active,a:focus{
 .mr_50{
     margin-right: 50px;
 }
+.ml_50{
+    margin-left: 50px;
+}
 .mb_15{
     margin-bottom: 15px;
 }
@@ -79,9 +82,6 @@ a:hover,a:active,a:focus{
 .ad_aside .menu ul li .child a.now{
     color: #fff;
 }
-
-
-
 .ad_section{
     padding-left: 180px;
 }

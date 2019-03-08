@@ -8,14 +8,18 @@
     <link rel="stylesheet" href="assets/nprogress/nprogress.css"/>
     <link rel="stylesheet" href="css/admin.css"/>
     <style>
-        .fileupload{
-            position: relative;
+         .fileupload{
+             position: relative;
+         }
+         .fileupload button{
+            position: absolute;
+            left: 0;
+            top: 0;
         }
-        .fileupload [type="file"]{
+         .fileupload input{
+            opacity: 0;
             width: 82px;
             height: 34px;
-            position: absolute;
-            opacity: 0;
         }
     </style>
 </head>
@@ -59,7 +63,7 @@
             <li class="active">二级分类</li>
         </ol>
         <div class="ad_content">
-            <button id="addBtn" class="btn btn-default mb_15">添加分类</button>
+            <button id="addBtn" class="btn btn-default mb_15" data-toggle="modal" data-target="#myModal">添加分类</button>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -79,6 +83,64 @@
         </div>
     </div>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="myModal" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加分类</h4>
+            </div>
+            <div class="modal-body">
+                <form id="defaultForm" role="form" class="form-signin" action="#">
+                    <div class="form-group">
+                        <div class="dropdown">
+                            一级分类：
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                <span class="dropdown-text">请选择</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="firstCategoryMenu">
+                            </ul>
+                        </div>
+                        <input type="hidden" name="categoryId">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="brandName" id="brandName" placeholder="请输入二级分类名称"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="brandLogo">
+                        <div class="fileupload">
+                            <button class="btn btn-default">上传图片</button>
+                            <input class="form-control" type="file" name="pic1" data-url="/category/addSecondCategoryPic"/>
+                        </div>
+                    </div>
+                    <div class="form-group"><img src="images/none.png" alt="" width="100" height="100"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" form="defaultForm" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/template" id="secondCategory">
+    <% for(var i = 0; i < rows.length; i++){ %>
+    <tr>
+        <td width="10%"><%=(page - 1) * size + i + 1%></td>
+        <td width="30%"><%=rows[i].categoryName %></td>
+        <td width="30%"><%=rows[i].brandName %></td>
+        <td width="30%"><img src="<%=rows[i].brandLogo %>" width="80"></td>
+    </tr>
+    <% } %>
+</script>
+<script type="text/template" id="firstCategory">
+    <% for(var i = 0; i < rows.length; i++){ %>
+    <li><a data-id="<%=rows[i].id%>" href="javascript:;"><%=rows[i].categoryName%></a></li>
+    <% } %>
+</script>
 <div class="modal fade" id="addModal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
